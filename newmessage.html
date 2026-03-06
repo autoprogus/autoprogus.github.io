@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewMessage Version 1.0 (Alpha) - Website Monitoring Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: #666;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .alpha-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b 0%, #f03e3e 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 10px rgba(240, 62, 62, 0.3);
+        }
+
+        .download-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .version-info {
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        .instructions {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .instructions h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .image-item {
+            text-align: center;
+        }
+
+        .image-item img {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+            border: 3px solid white;
+        }
+
+        .image-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .image-item p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .image-caption {
+            font-weight: bold;
+            color: #333;
+            margin: 1rem 0 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .step-list li {
+            padding: 1rem;
+            background: #f8f9fa;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .license {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .license h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .license-content {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            font-size: 0.95rem;
+            color: #444;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+        }
+
+        .license-content h3 {
+            color: #667eea;
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .license-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .license-content p {
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .license-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .license-content li {
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-info {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #e8f4fd;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .footer {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .image-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                margin: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">NewMessage Version 1.0 (Alpha)</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#features">Features</a>
+                <a href="#instructions">Instructions</a>
+                <a href="#download">Download</a>
+                <a href="#license">License</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="alpha-badge">⚡ Software is in Alpha Testing Stage</div>
+            <h1>NewMessage Version 1.0 (Alpha) - Website Change Monitoring</h1>
+            <p>Track changes on web pages and receive instant audio notifications. Simple setup and convenient 24/7 monitoring.</p>
+            
+            <div id="download" class="download-section">
+                <a href="NewMessage Version 1.0 (Alpha).exe" class="download-button" download>📥 Download NewMessage Version 1.0 (Alpha)</a>
+                <div class="version-info">
+                    <p>Version 1.0 (Alpha) | Windows 10/11 <!--| Size: wait MB</p>--!>
+                    <!--<p>SHA-256: wait</p>--!>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Smart Monitoring</h3>
+                <p>Track changes on websites with customizable check frequency</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔊</div>
+                <h3>Audio Notifications</h3>
+                <p>Instant sound alerts when changes are detected on monitored websites</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚙️</div>
+                <h3>Flexible Settings</h3>
+                <p>Individual settings for each monitored website</p>
+            </div>
+        </section>
+
+        <section id="instructions" class="instructions">
+            <h2>How to Use NewMessage Version 1.0 (Alpha)</h2>
+            
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="picture 1.jpg" 
+                         alt="Step 1: Configuring Monitoring"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\' font-size=\'16\'%3Epicture 1.jpg%3C/text%3E%3C/svg%3E';">
+                    <div class="image-caption">Step 1: Configuring Monitoring</div>
+                    <p>Enter the website URL, the first text to find on the page; the second text that should follow it, and the check interval</p>
+                </div>
+                
+                <div class="image-item">
+                    <img src="picture 2.jpg" 
+                         alt="Step 2: Configuring Audio Notifications"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\' font-size=\'16\'%3Epicture 2.jpg%3C/text%3E%3C/svg%3E';">
+                    <div class="image-caption">Step 2: Configuring Audio Notifications</div>
+                    <p>Audio notifications can be turned on or off</p>
+                </div>
+                
+                <div class="image-item">
+                    <img src="picture 3.jpg" 
+                         alt="Step 3: Starting Monitoring"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\' viewBox=\'0 0 300 200\'%3E%3Crect width=\'300\' height=\'200\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%23999\' font-size=\'16\'%3Epicture 3.jpg%3C/text%3E%3C/svg%3E';">
+                    <div class="image-caption">Step 3: Starting Monitoring</div>
+                    <p>Launch the program and start receiving audio notifications about changes</p>
+                </div>
+            </div>
+
+            <ul class="step-list">
+                <li>
+                    <span class="step-number">1</span>
+                    Download the NewMessage Version 1.0 (Alpha) program using the link above
+                </li>
+                <li>
+                    <span class="step-number">2</span>
+                    Run NewMessage Version 1.0 (Alpha).exe and follow the installer instructions
+                </li>
+                <li>
+                    <span class="step-number">3</span>
+                    Read and accept the software license agreement
+                </li>
+                <li>
+                    <span class="step-number">4</span>
+                     Fill in all the necessary fields in the program
+                </li>
+                <li>
+                    <span class="step-number">5</span>
+                   Click "Start" and the program will begin monitoring
+                </li>
+            </ul>
+
+            <div style="margin-top: 2rem; padding: 1rem; background: #e8f4fd; border-radius: 10px;">
+                <p style="color: #0369a1;">💡 The program automatically checks for changes according to your settings. When changes are detected, you will receive an audio alert with detailed information.</p>
+            </div>
+        </section>
+
+        <section style="background: white; border-radius: 20px; padding: 2rem; margin: 2rem 0;">
+            <h2 style="text-align: center; margin-bottom: 2rem;">System Requirements</h2>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                <div style="padding: 1rem; border: 1px solid #eee; border-radius: 10px;">
+                    <strong>Operating System:</strong> Windows 10/11
+                </div>
+                <div style="padding: 1rem; border: 1px solid #eee; border-radius: 10px;">
+                    <strong>Processor:</strong> Intel/AMD x64 processor with at least 1.5 GHz
+                </div>
+                <div style="padding: 1rem; border: 1px solid #eee; border-radius: 10px;">
+                    <strong>RAM:</strong> 4 GB
+                </div>
+                <div style="padding: 1rem; border: 1px solid #eee; border-radius: 10px;">
+                    <strong>Free Disk Space:</strong> 200 MB
+                </div>
+            </div>
+        </section>
+
+        <section id="license" class="license">
+            <h2>License Agreement</h2>
+            <div class="license-content">
+                <h3>1. Subject of the Agreement</h3>
+                <p>1.1. This License Agreement (hereinafter referred to as the "Agreement") is concluded between you (hereinafter referred to as the "User" or "Licensee") and the Rights Holder — an individual who is the developer of the "NewMessage Version 1.0 (Alpha)" program (hereinafter referred to as the "Software").</p>
+                <p>1.2. By installing or otherwise starting to use the Software, the User expresses their full and unconditional consent to all terms of this Agreement.</p>
+
+                <h3>2. Exclusive Warranties and Liability (Disclaimer of Warranties)</h3>
+                <p>2.1. Use at Your Own Risk. The Software is provided on an "AS IS" basis. The User assumes all risks associated with the use, quality, and performance of the Software.</p>
+                <p>2.2. Development Stage. The Software is provided at the alpha stage and may contain errors (bugs), shortcomings, and malfunctions. The User understands and agrees that individual functions of the Software may operate incorrectly or be unavailable.</p>
+                <p>2.3. Disclaimer of Warranties. The Rights Holder expressly disclaims all warranties of any kind, whether express or implied, including, but not limited to: warranties of merchantability, fitness for a particular purpose, absence of errors, security, and uninterrupted operation.</p>
+                <p>2.4. Disclaimer of Liability for Damages. The Rights Holder shall not be liable for any direct or indirect damages arising out of the use or inability to use the Software, including, but not limited to: data loss, hardware failure, or financial losses.</p>
+                <p>2.5. Data Accuracy. The Rights Holder does not guarantee the accuracy, completeness, or timeliness of any information obtained through the use of the Software. The User undertakes to independently verify critical data.</p>
+
+                <h3>3. Transfer of Risk to the User</h3>
+                <p>3.1. The User confirms that:</p>
+                <ul>
+                    <li>they possess sufficient qualifications to use the Software;</li>
+                    <li>they independently ensure the backup of their data before using the Software;</li>
+                    <li>any actions performed using the Software, as well as the consequences of these actions, are their sole responsibility.</li>
+                </ul>
+                <p>3.2. The User undertakes not to make any claims against the Rights Holder related to any losses or damages caused by the use of the Software.</p>
+
+                <h3>4. User Obligations Regarding Lawful Use</h3>
+                <p>4.1. It is prohibited to use the Software to violate the law, gain unauthorized access to systems, breach third-party rules, or for any other unlawful purposes. The User is solely responsible for ensuring that their actions performed using the Software comply with applicable laws and the rules of specific Internet resources.</p>
+
+                <h3>5. Final Provisions</h3>
+                <p>5.1. If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                <p>5.2. This Agreement shall be governed by the laws of the Russian Federation.</p>
+                <p>5.3. The Rights Holder retains all exclusive rights to the Software. This Agreement grants the User only a simple (non-exclusive) license to use the Software and does not imply the transfer of exclusive rights.</p>
+
+                <div class="contact-info">
+                    <h3>6. Contact Information of the Rights Holder:</h3>
+                    <p>📧 autoprogus@hotmail.com</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 NewMessage Version 1.0 (Alpha). All rights reserved.</p>
+        <p>Email: autoprogus@hotmail.com</p>
+    </footer>
+</body>
+</html>
