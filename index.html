@@ -29,6 +29,12 @@
             margin-bottom: 30px;
             letter-spacing: 2px;
         }
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
         .link {
             display: inline-block;
             padding: 15px 30px;
@@ -37,18 +43,39 @@
             text-decoration: none;
             border-radius: 8px;
             font-size: 1.2em;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         .link:hover {
             background-color: #45a049;
             transform: scale(1.05);
+        }
+        /* Можно добавить разные цвета для второй ссылки, если нужно */
+        .link-secondary {
+            background-color: #2196F3;
+        }
+        .link-secondary:hover {
+            background-color: #0b7dda;
+        }
+        @media (max-width: 500px) {
+            .links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            .link {
+                width: 80%;
+                box-sizing: border-box;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>autoprogus</h1>
-        <a href="newmessage.html" class="link">Перейти на newmessage.html</a>
+        <div class="links">
+            <a href="newmessage.html" class="link">Перейти на newmessage.html</a>
+            <a href="knowledge.html" class="link link-secondary">Перейти на knowledge.html</a>
+        </div>
     </div>
 </body>
 </html>

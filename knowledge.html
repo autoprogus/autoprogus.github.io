@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Knowledge Version 1.0 (Alpha) – Personal Knowledge Base for Android</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0f2f5;
+            color: #1e2a3a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* modern gradient header */
+        .header {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .nav {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0.9rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.65rem;
+            font-weight: 700;
+            background: linear-gradient(130deg, #1e7e34 0%, #2c5f2d 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+
+        .logo span {
+            font-weight: 500;
+            font-size: 0.9rem;
+            background: none;
+            color: #4b6a3b;
+            -webkit-text-fill-color: #4b6a3b;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #2c3e2f;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover {
+            color: #1e7e34;
+            border-bottom-color: #2e7d32;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+        }
+
+        /* hero section */
+        .hero {
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 3rem 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.08);
+            text-align: center;
+            border: 1px solid rgba(46,125,50,0.15);
+        }
+
+        .alpha-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fef9e3;
+            color: #b66f0d;
+            padding: 0.4rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.3px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffe0a3;
+        }
+
+        .hero h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #1b4d1b, #2e7d32, #4caf50);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #2d3e2f;
+            max-width: 750px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .download-section {
+            background: #f8fbf5;
+            border-radius: 1.8rem;
+            padding: 2rem;
+            margin: 1.5rem 0 0.5rem;
+            border: 1px solid #ddebd0;
+        }
+
+        .download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(105deg, #1e7e34, #2c5e2a);
+            color: white;
+            text-decoration: none;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 18px rgba(30,126,52,0.25);
+            border: none;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 28px rgba(46,125,50,0.35);
+            background: linear-gradient(105deg, #166d2c, #1f4e1f);
+        }
+
+        .version-info {
+            margin-top: 1rem;
+            color: #557c4a;
+            font-size: 0.9rem;
+        }
+
+        /* feature cards */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 1.6rem;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            transition: all 0.25s;
+            border: 1px solid #eef2e6;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #bcddae;
+            box-shadow: 0 18px 30px -12px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin: 0.75rem 0;
+            font-size: 1.4rem;
+            color: #1f4722;
+        }
+
+        .feature-card p {
+            color: #4a5b44;
+        }
+
+        /* instructions + gallery */
+        .instructions {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+        }
+
+        .instructions h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #1e4722;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0 2rem;
+        }
+
+        .image-item {
+            flex: 1;
+            min-width: 240px;
+            background: #fefef7;
+            border-radius: 1.4rem;
+            padding: 1rem;
+            text-align: center;
+            transition: 0.2s;
+            border: 1px solid #e2f0da;
+        }
+
+        .image-item img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            background: #eef2e0;
+            border: 2px solid white;
+        }
+
+        .image-caption {
+            font-weight: 700;
+            margin: 1rem 0 0.4rem;
+            font-size: 1.1rem;
+            color: #2a5c2a;
+        }
+
+        .step-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .step-list li {
+            background: #fafcf7;
+            margin: 1rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            border: 1px solid #dfecce;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #2e7d32;
+            color: white;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            margin-top: 2rem;
+            background: #eef5ea;
+            padding: 1.2rem 1.8rem;
+            border-radius: 1.2rem;
+            border-left: 6px solid #4caf50;
+            color: #2b4827;
+        }
+
+        /* system req for android */
+        .sys-req {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            margin-top: 1.2rem;
+        }
+
+        .req-card {
+            background: #fafcf7;
+            border-radius: 1.2rem;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e0edcf;
+        }
+
+        /* license section */
+        .license {
+            background: white;
+            border-radius: 2rem;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+        }
+
+        .license h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #1f4722;
+        }
+
+        .license-content {
+            background: #fefef7;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            max-height: 480px;
+            overflow-y: auto;
+            font-size: 0.95rem;
+            border: 1px solid #e2efd4;
+        }
+
+        .license-content h3 {
+            color: #2c6e2c;
+            margin: 1.2rem 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .license-content h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .contact-info {
+            margin-top: 1.8rem;
+            background: #e9f3e3;
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .footer {
+            background: #ffffffd9;
+            backdrop-filter: blur(4px);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #dae8d0;
+            color: #4f6b47;
+            font-size: 0.9rem;
+        }
+
+        .android-note {
+            background: #e3f2fd;
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #0b5e2e;
+        }
+
+        @media (max-width: 780px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .nav {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .nav-links {
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .step-list li {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">Knowledge <span>v1.0 Alpha · Android</span></div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#features">Features</a>
+                <a href="#instructions">Guide</a>
+                <a href="#download">Download</a>
+                <a href="#license">License</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="alpha-badge">
+                📱 ANDROID ALPHA – STRUCTURED KNOWLEDGE BASE
+            </div>
+            <h1>Knowledge Version 1.0 (Alpha)<br>Your Personal Knowledge Manager for Android</h1>
+            <p>Organize information on your phone or tablet: sections, topics, chapters, paragraphs, keywords, and full-text content. Built-in text graph, smart search, and local storage — all offline.</p>
+            <div id="download" class="download-section">
+                <a href="https://github.com/autoprogus/autoprogus.github.io/releases/download/Knowledge/Knowledge.apk" class="download-button" download> 
+                    📱 Download APK for Android
+                </a>
+                <div class="version-info">
+                    <p>📦 Android 9.0+ <br>⚙️ Offline first, local JSON storage, optimized for touch</p>
+                </div>
+                <div class="android-note">
+                    🔒 No internet required · All data stored locally on your device
+                </div>
+            </div>
+        </section>
+        <!-- Features -->
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📚</div>
+                <h3>Hierarchical structure</h3>
+                <p>Section → Topic → Chapter → Paragraph → Keywords → Full text. Perfect for study, technical docs or personal notes on the go.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔎</div>
+                <h3>Smart search & filters</h3>
+                <p>Search across any field: title, keywords, content, or combine filters. Highlighted results with instant navigation.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Text graph engine</h3>
+                <p>Underlying graph structure tracks input changes in real time. Smooth field highlighting and debounced updates.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💾</div>
+                <h3>Local JSON storage</h3>
+                <p>All entries saved locally on your Android device, no cloud. Auto-save and timestamped modifications.</p>
+            </div>
+        </section>
+
+        <!-- Visual instructions + screenshots (updated for Knowledge Android) -->
+        <section id="instructions" class="instructions">
+            <h2>📱 How to use Knowledge on Android</h2>
+            <div class="image-gallery">
+                <div class="image-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%233f6741'/%3E%3Ctext x='50%25' y='45%25' fill='white' font-size='18' text-anchor='middle' font-family='monospace'%3ESection + Topic%3C/text%3E%3Ctext x='50%25' y='65%25' fill='%23c8e6c9' font-size='12' text-anchor='middle'%3ETap to fill fields%3C/text%3E%3C/svg%3E"
+                         alt="Fields: section, topic, chapter, paragraph">
+                    <div class="image-caption">Step 1: Fill structure</div>
+                    <p>Enter Section, Topic, Chapter, Paragraph, Keywords, and main content. Green highlight indicates filled fields.</p>
+                </div>
+                <div class="image-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%232c5e2c'/%3E%3Ctext x='50%25' y='45%25' fill='white' font-size='18' text-anchor='middle'%3ESearch panel%3C/text%3E%3Ctext x='50%25' y='70%25' fill='%23fff9c4' font-size='12' text-anchor='middle'%3EFilter by any field%3C/text%3E%3C/svg%3E"
+                         alt="search and filter checkboxes">
+                    <div class="image-caption">Step 2: Smart filtering</div>
+                    <p>Use checkboxes to search in specific fields. Real-time results list shows matched entries.</p>
+                </div>
+                <div class="image-item">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 260'%3E%3Crect width='400' height='260' fill='%23345e34'/%3E%3Ctext x='50%25' y='45%25' fill='white' font-size='17' text-anchor='middle'%3ESave & manage%3C/text%3E%3Ctext x='50%25' y='70%25' fill='%23e8f5e8' font-size='12' text-anchor='middle'%3ENew entry, delete, autosave%3C/text%3E%3C/svg%3E"
+                         alt="save and delete buttons">
+                    <div class="image-caption">Step 3: Save & organize</div>
+                    <p>Tap “Save” to store entry, “New” to reset, “Delete” to remove selected entry. Everything persists locally.</p>
+                </div>
+            </div>
+            <ul class="step-list">
+                <li><span class="step-number">1</span> Download Knowledge APK and install on Android 9.0+ (allow installation from unknown sources).</li>
+                <li><span class="step-number">2</span> Launch the app, read and accept the License Agreement (shown once).</li>
+                <li><span class="step-number">3</span> Fill the left side: search filters, or start typing in Section / Topic / Chapter etc. Keyboard adapts for optimal input.</li>
+                <li><span class="step-number">4</span> Press “💾 Save” – entry gets timestamp and appears in the left list.</li>
+                <li><span class="step-number">5</span> Use the search bar and checkboxes to instantly filter entries, tap any entry to edit.</li>
+            </ul>
+            <div class="tip-box">
+                💡 Pro tip: Keywords field supports comma separated values. The app uses a unique debounce timer to optimize graph updates. All data is stored in <code>/data/data/org.qtproject.example/files/entries.json</code> – easy to backup.
+            </div>
+        </section>
+
+        <!-- System requirements for Android -->
+        <section class="sys-req">
+            <h2 style="text-align:center; color:#1f4722;">📱 System requirements (Android)</h2>
+            <div class="grid-2col">
+                <div class="req-card"><strong>🤖 OS:</strong> Android 9.0 (Pie) or higher (API 28+)</div>
+                <div class="req-card"><strong>📱 Architecture:</strong> ARM64 (arm64-v8a) / ARMv7 (armeabi-v7a)</div>
+                <div class="req-card"><strong>🧠 RAM:</strong> 3 GB minimum (4 GB recommended for large datasets)</div>
+                <div class="req-card"><strong>💾 Storage:</strong> 150 MB free space + space for your entries (JSON)</div>
+                <div class="req-card"><strong>📲 Screen:</strong> 5.0" or larger recommended, works on phones and tablets</div>
+                <div class="req-card"><strong>⚙️ Permissions:</strong> Storage access (read/write entries.json for backups)</div>
+                <div class="req-card"><strong>🌐 Internet:</strong> Not required – fully offline knowledge base</div>
+                <div class="req-card"><strong>🎯 Input:</strong> Virtual keyboard with predictive text disabled for better accuracy</div>
+            </div>
+            <div style="margin-top: 1.2rem; background: #e3f2e8; border-radius: 1rem; padding: 0.8rem 1.2rem; font-size: 0.85rem; color: #2c5e2a;">
+                ⚡ <strong>Optimized for Android:</strong> Supports immersive mode, automatic orientation changes, and touch-friendly interface. Built with Qt for seamless native performance.
+            </div>
+        </section>
+
+        <!-- License Section (identical to software license) -->
+        <section id="license" class="license">
+            <h2>📜 License Agreement</h2>
+            <div class="license-content">
+                <h3>1. Subject of the Agreement</h3>
+                <p>1.1. This License Agreement (hereinafter referred to as the "Agreement") is concluded between you (hereinafter referred to as the "User" or "Licensee") and the Rights Holder — an individual who is the developer of the "Knowledge Version 1.0 (Alpha)" program (hereinafter referred to as the "Software").</p>
+                <p>1.2. By installing or otherwise starting to use the Software, the User expresses their full and unconditional consent to all terms of this Agreement.</p>
+
+                <h3>2. Exclusive Warranties and Liability (Disclaimer of Warranties)</h3>
+                <p>2.1. <b>Use at Your Own Risk.</b> The Software is provided on an "AS IS" basis. The User assumes all risks associated with the use, quality, and performance of the Software.</p>
+                <p>2.2. <b>Development Stage.</b> The Software is provided at the alpha stage and may contain errors (bugs), shortcomings, and malfunctions. The User understands and agrees that individual functions of the Software may operate incorrectly or be unavailable.</p>
+                <p>2.3. <b>Disclaimer of Warranties.</b> The Rights Holder expressly disclaims all warranties of any kind, whether express or implied, including, but not limited to: warranties of merchantability, fitness for a particular purpose, absence of errors, security, and uninterrupted operation.</p>
+                <p>2.4. <b>Disclaimer of Liability for Damages.</b> The Rights Holder shall not be liable for any direct or indirect damages arising out of the use or inability to use the Software, including, but not limited to: data loss, hardware failure, or financial losses.</p>
+                <p>2.5. <b>Data Accuracy.</b> The Rights Holder does not guarantee the accuracy, completeness, or timeliness of any information obtained through the use of the Software. The User undertakes to independently verify critical data.</p>
+
+                <h3>3. Transfer of Risk to the User</h3>
+                <p>3.1. The User confirms that:</p>
+                <ul>
+                    <li>they possess sufficient qualifications to use the Software;</li>
+                    <li>they independently ensure the backup of their data before using the Software;</li>
+                    <li>any actions performed using the Software, as well as the consequences of these actions, are their sole responsibility.</li>
+                </ul>
+                <p>3.2. The User undertakes not to make any claims against the Rights Holder related to any losses or damages caused by the use of the Software.</p>
+
+                <h3>4. User Obligations Regarding Lawful Use</h3>
+                <p>4.1. It is prohibited to use the Software to violate the law, gain unauthorized access to systems, breach third-party rules, or for any other unlawful purposes. The User is solely responsible for ensuring that their actions performed using the Software comply with applicable laws and the rules of specific Internet resources.</p>
+
+                <h3>5. Final Provisions</h3>
+                <p>5.1. If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.</p>
+                <p>5.2. This Agreement shall be governed by the laws of the Russian Federation.</p>
+                <p>5.3. The Rights Holder retains all exclusive rights to the Software. This Agreement grants the User only a simple (non-exclusive) license to use the Software and does not imply the transfer of exclusive rights.</p>
+
+                <div class="contact-info">
+                    <h3>📬 Contact Information of the Rights Holder:</h3>
+                    <p>✉️ <a href="mailto:autoprogus@hotmail.com" style="color:#2e7d32; text-decoration:none;">autoprogus@hotmail.com</a></p>
+                    <p style="margin-top:0.5rem;">© Knowledge Version 1.0 (Alpha). All rights reserved.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- additional highlight: about graph engine -->
+        <div style="background: #fef8e7; border-radius: 1.5rem; padding: 1.5rem; margin: 1rem 0; text-align: center; border: 1px solid #ffe0a3;">
+            <p style="font-weight: 500;">🧩 Under the hood: TextGraphCore + HighlightManager — realtime field styling, debounced output, 7 input nodes (6 data fields + search).</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Knowledge Version 1.0 (Alpha) – structured knowledge management for Android</p>
+        <p style="margin-top: 8px;">📧 Support & feedback: autoprogus@hotmail.com | MIT for web resources, proprietary license applies to the APK</p>
+    </footer>
+</body>
+</html>
